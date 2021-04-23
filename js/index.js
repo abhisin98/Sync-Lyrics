@@ -51,7 +51,7 @@ $(document).ready(function() {
             return el;
         });
         console.log(lyrics)
-        repiter(lyrics, "#repiter3", "h5 text-secondary");
+        repiter(lyrics, "#section2Repiter3", "h5 text-secondary");
 
     });
 
