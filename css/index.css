@@ -1,0 +1,53 @@
+    .embed-responsive {
+        height: auto;
+        margin-top: 10px;
+        border: 1px solid white;
+    }
+    /**************** Section  1 ************ */
+    
+    #section1linkInput {
+        width: 84%;
+        margin-top: 10px;
+    }
+    
+    #section1linkButton {
+        width: 15%;
+        margin-top: 10px;
+    }
+    
+    #section1lyricsInput {
+        margin-top: 10px;
+        height: 42vh;
+    }
+    
+    #section1Button {
+        margin-top: 10px;
+    }
+    /**************** Section  2 ************ */
+    
+    #section2SpeedIncrease {
+        margin-top: 10px;
+    }
+    
+    #section2SpeedDecrease {
+        margin-top: 10px;
+    }
+    
+    #section2container {
+        overflow: scroll;
+        margin-top: 10px;
+        min-height: 42vh;
+    }
+    
+    #section2Button {
+        margin-top: 10px;
+    }
+    /**************** Section  3 ************ */
+    
+    #section3PreviewLyrics {
+        height: 53vh;
+    }
+    
+    #section3Button {
+        margin-top: 10px;
+    }
