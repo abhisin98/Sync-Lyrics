@@ -2,102 +2,104 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lyrics Sync</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lyrics Sync</title>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="js/index.js"></script>
-    <!---<script src="https://raw.githubusercontent.com/abhisin98/sync/main/js/index.js?token=AG6TNMG5LIQN3RZDVZKGWOLAQL3KC"></script>
--->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/index.css">
-    <!--<link rel="stylesheet" href="https://raw.githubusercontent.com/abhisin98/sync/main/css/index.css?token=AG6TNMHZJ26WGVV26WF56VTAQL3X2">
--->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="js/index.js"></script>
+  <!---<script src="https://raw.githubusercontent.com/abhisin98/sync/main/js/index.js?token=AG6TNMG5LIQN3RZDVZKGWOLAQL3KC"></script>
+  -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/index.css">
+  <!--<link rel="stylesheet" href="https://raw.githubusercontent.com/abhisin98/sync/main/css/index.css?token=AG6TNMHZJ26WGVV26WF56VTAQL3X2">
+  -->
 </head>
 
 <body class="bg-dark text-white">
 
-    <section id="section1">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm">
-                    <div id="section1Iframe" class="embed-responsive embed-responsive-16by9">
-                    </div>
-                </div>
-
-                <div class="col-sm" id="section1youtubelink">
-                    <input id="section1linkInput" class="form-control-lg bg-dark text-white " type="text" placeholder="Enter youtube url">
-                    <button id="section1linkButton" type="button" class="btn btn-primary float-right btn-lg text-white">></button>
-                </div>
-
-                <div class="col-sm">
-                    <textarea id="section1lyricsInput" class="form-control bg-dark text-white" rows="5"> 
-                    </textarea>
-                </div>
-                <div class="col-sm">
-                    <button id="section1Button" type="submit" class="btn btn-primary btn-lg btn-block">Next</button>
-                </div>
-
-            </div>
+  <section id="section1">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm">
+          <div id="section1Iframe" class="embed-responsive embed-responsive-16by9">
+          </div>
         </div>
-    </section>
 
-    <!--- Section 2-->
-    <section id="section2">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm">
-                    <div id="section2Iframe" class="embed-responsive embed-responsive-16by9">
-                    </div>
-                </div>
-
-                <div class="col-sm">
-                    <button type="button" id="section2SpeedIncrease" class="btn btn-primary float-left text-white">+300</button>
-                    <button type="button" id="section2SpeedDecrease" class="btn btn-primary float-right text-white">-300</button>
-
-                </div>
-
-                <div id="section2container" class="col-md-auto">
-                    <div id="section2Repiter1" class="text-center">
-                    </div>
-                    <div id="section2Repiter2" class="text-center">
-                    </div>
-                    <div id="section2Repiter3" class="text-center">
-                    </div>
-                </div>
-
-                <div class="col-sm">
-                    <button id="section2ButtonBack" type="button" class="btn btn-primary float-left text-white btn-lg"><</button>
-                    <button id="section2Button" type="submit" class="btn btn-primary btn-lg btn-block">Next</button>
-                </div>
-
-            </div>
+        <div class="col-sm" id="section1youtubelink">
+          <input id="section1linkInput" class="form-control-lg bg-dark text-white " type="text" placeholder="Enter youtube url">
+          <button id="section1linkButton" type="button" class="btn btn-primary float-right btn-lg text-white">></button>
         </div>
+
+        <div class="col-sm">
+          <textarea id="section1lyricsInput" class="form-control bg-dark text-white" rows="5">
+          </textarea>
+        </div>
+        <div class="col-sm">
+          <button id="section1Button" type="submit" class="btn btn-primary btn-lg btn-block">Next</button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!--- Section 2-->
+  <section id="section2">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm">
+          <div id="section2Iframe" class="embed-responsive embed-responsive-16by9">
+          </div>
+        </div>
+
+        <div class="col-sm">
+          <button type="button" id="section2SpeedIncrease" class="btn btn-primary float-left text-white">+300</button>
+          <button type="button" id="section2SpeedDecrease" class="btn btn-primary float-right text-white">-300</button>
+
+        </div>
+
+        <div class="col-sm">
+          <div id="section2container" class="">
+            <div id="section2Repiter1" class="text-center">
+            </div>
+            <div id="section2Repiter2" class="text-center">
+            </div>
+            <div id="section2Repiter3" class="text-center">
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm">
+          <button id="section2ButtonBack" type="button" class="btn btn-primary float-left text-white btn-lg"><</button>
+            <button id="section2Button" type="submit" class="btn btn-primary btn-lg btn-block">Next</button>
+          </div>
+
+        </div>
+      </div>
     </section>
 
     <!--- Section 3-->
     <section id="section3">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm">
-                    <div id="section3Iframe" class="embed-responsive embed-responsive-16by9">
-                    </div>
-                </div>
-
-                <div id="section3PreviewLyrics" class="col-sm">
-
-                </div>
-
-                <div class="col-sm">
-                    <button id="section3Button" type="submit" class="btn btn-primary btn-lg btn-block">Download</button>
-                </div>
-
+      <div class="container">
+        <div class="row">
+          <div class="col-sm">
+            <div id="section3Iframe" class="embed-responsive embed-responsive-16by9">
             </div>
+          </div>
+
+          <div id="section3PreviewLyrics" class="col-sm">
+
+          </div>
+
+          <div class="col-sm">
+            <button id="section3Button" type="submit" class="btn btn-primary btn-lg btn-block">Download</button>
+          </div>
+
         </div>
+      </div>
     </section>
-</body>
+  </body>
 
 </html>
