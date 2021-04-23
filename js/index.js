@@ -20,7 +20,7 @@ function onYouTubePlayerAPIReady(eid, vid) {
 /********************************************************************************************* */
 
 $(document).ready(function() {
-  console.log ("abhi git")
+  //console.log ("abhi git");
 
     /****** temp ********/
     $("#section1linkInput").val("https://youtu.be/igiYeOPMdN0");
@@ -35,6 +35,7 @@ $(document).ready(function() {
     let url
 
     $("#section1linkButton").click(function() {
+      console.log ("abhi git")
         url = $("#section1linkInput").val();
         onYouTubePlayerAPIReady("section1Iframe", url);
     });
