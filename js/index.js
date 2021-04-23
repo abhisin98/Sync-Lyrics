@@ -35,7 +35,7 @@ $(document).ready(function() {
     let url
 
     $("#section1linkButton").click(function() {
-      console.log ("abhi git")
+      console.log ("abhi git done")
         url = $("#section1linkInput").val();
         onYouTubePlayerAPIReady("section1Iframe", url);
     });
