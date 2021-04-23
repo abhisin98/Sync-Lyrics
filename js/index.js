@@ -20,6 +20,7 @@ function onYouTubePlayerAPIReady(eid, vid) {
 /********************************************************************************************* */
 
 $(document).ready(function() {
+  console.log ("abhi git")
 
     /****** temp ********/
     $("#section1linkInput").val("https://youtu.be/igiYeOPMdN0");
