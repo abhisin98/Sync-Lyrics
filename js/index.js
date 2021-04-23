@@ -117,10 +117,10 @@ $(document).ready(function() {
         }
     });
 
-    $("#section2ButtonBack").click(function() {
+   /* $("#section2ButtonBack").click(function() {
 
         //Lyrics Sync Back
-    });
+    });*/
 
     /**************** Section  3 ************ */
     $("#section3Button").click(function() {
