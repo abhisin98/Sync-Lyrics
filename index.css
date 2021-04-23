@@ -1,0 +1,69 @@
+.embed-responsive {
+  height: auto;
+  margin-top: 10px;
+  border: 1px solid white;
+}
+.button-group {
+  height: auto;
+  margin-top: 10px;
+}
+.lyrics-input {
+  height: auto;
+  margin-top: 10px;
+}
+#masterrepiter {
+  overflow: scroll;
+}
+
+/*#repiter1 {
+  overflow: scroll;
+  height: 40%;
+}
+#repiter2 {
+  height: 20%;
+}
+#repiter3 {
+  overflow: scroll;
+  height: 40%;
+}*/
+
+#input1 {
+  height: 60vh;
+}
+.button-submit {
+  height: auto;
+  margin-top: 10px;
+}
+.repiter {
+  height: 60vh;
+}
+#repiter1 {
+  margin-top: 10px;
+  height: auto;
+}
+#repiter2 {
+  margin-top: 10px;
+  height: auto;
+}
+#repiter3 {
+  margin-top: 10px;
+  height: auto;
+}
+#button4 {
+  width: 15%;
+  margin-right: 1%;
+}
+#button5 {
+  width: 84%;
+}
+
+#youtubelink {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+#sectionlinkInput {
+  width: 84%;
+}
+#sectionlinkButton {
+  width: 15%;
+}
