@@ -6,176 +6,206 @@ firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 var player;
 
 function onYouTubePlayerAPIReady(eid, vid) {
-    player = new YT.Player(eid, {
-        videoId: youtube_parser(vid)
-    });
+  player = new YT.Player(eid, {
+    videoId: youtube_parser(vid)
+  });
 
-    function youtube_parser(url) {
-        var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
-        var match = url.match(regExp);
-        return (match && match[7].length == 11) ? match[7] : false;
-    }
+  function youtube_parser(url) {
+    var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+    var match = url.match(regExp);
+    return (match && match[7].length == 11) ? match[7]: false;
+  }
 }
 
 /********************************************************************************************* */
 
 $(document).ready(function() {
-  //console.log ("abhi git");
 
-    /****** temp ********/
-    $("#section1linkInput").val("https://youtu.be/igiYeOPMdN0");
-    $("#section1lyricsInput").val(iopkka)
+  /****** temp ********/
+  $("#section1linkInput").val("https://youtu.be/igiYeOPMdN0");
+  $("#section1lyricsInput").val(iopkka)
 
-    /****** *************/
-    //$("#section1").hide();
-    $("#section2").hide();
-    $("#section3").hide();
+  /****** *************/
+  //$("#section1").hide();
+  $("#section2").hide();
+  $("#section3").hide();
 
-    /**************** Section  1 ************ */
-    let url
+  /**************** Section  1 ************ */
+  let url
 
-    $("#section1linkButton").click(function() {
-      console.log ("abhi git done")
-        url = $("#section1linkInput").val();
-        onYouTubePlayerAPIReady("section1Iframe", url);
+  $("#section1linkButton").click(function() {
+    url = $("#section1linkInput").val();
+    onYouTubePlayerAPIReady("section1Iframe", url);
+  });
+
+
+  let lyrics
+
+  $("#section1Button").click(function() {
+    $("#section1").hide();
+    $("#section2").show();
+
+    onYouTubePlayerAPIReady("section2Iframe", url);
+
+    lyrics = $("#section1lyricsInput").val().split("\n").filter(function(el) {
+      return el;
     });
+    console.log(lyrics)
+    repiter(lyrics, "#section2Repiter3", "h5 text-secondary");
 
+  });
 
-    let lyrics
+  /**************** Section  2 ************ */
+  $("#section2SpeedIncrease").click(function() {
+    //Video PlaybackRate  increase
+  });
+  $("#section2SpeedDecrease").click(function() {
+    //Video PlaybackRate  Decrease
+  });
 
-    $("#section1Button").click(function() {
-        $("#section1").hide();
-        $("#section2").show();
+  let lyrics3 = [];
+  let lyrics2 = [];
+  let status = false;
 
-        onYouTubePlayerAPIReady("section2Iframe", url);
+  $("#section2Button").click(function() {
+    //player.playVideo();
+    //console.log (player.playerInfo.currentTime, player)
+    //console.log(timeX(player.playerInfo.currentTime))
 
-        lyrics = $("#section1lyricsInput").val().split("\n").filter(function(el) {
-            return el;
+    //console.log ('abhi', player.getPlayerState())
+
+    if (player.getPlayerState() == YT.PlayerState.PLAYING) {
+
+      if (status) {} else {
+
+        let elmnt = document.getElementById("section2Repiter2");
+        elmnt.scrollIntoView({
+          behavior: 'auto',
+          block: 'start', //start, center, end
+          inline: 'center'
         });
-        console.log(lyrics)
+
+        if (lyrics2.length < 1) {
+          console.log("start");
+
+          lyrics2.push(lyrics.shift());
+          srtStart(lyrics2[0], player.playerInfo.currentTime);
+          statusBack = false;
+        } else if (lyrics.length < 1) {
+          console.log("end");
+
+          srtEnd(player.playerInfo.currentTime)
+          lyrics3.push(lyrics2.shift());
+          status = true;
+          console.log(makeSrt)
+        } else {
+          console.log("default");
+
+          srtEnd(player.playerInfo.currentTime)
+          lyrics3.push(lyrics2.shift());
+          lyrics2.push(lyrics.shift());
+          srtStart(lyrics2[0], player.playerInfo.currentTime)
+        }
         repiter(lyrics, "#section2Repiter3", "h5 text-secondary");
+        repiter(lyrics2, "#section2Repiter2", "h3");
+        repiter(lyrics3, "#section2Repiter1", "h5 text-secondary");
+        //console.log(lyrics, lyrics2, lyrics3)
+      }
+    } else {
+      player.playVideo();
+    }
+  });
 
-    });
+  let statusBack = false;
 
-    /**************** Section  2 ************ */
-    $("#section2SpeedIncrease").click(function() {
-        //Video PlaybackRate  increase
-    });
-    $("#section2SpeedDecrease").click(function() {
-        //Video PlaybackRate  Decrease
-    });
+  $("#section2ButtonBack").click(function() {
 
-    let lyrics3 = [];
-    let lyrics2 = [];
-    let status = false;
+    //Lyrics Sync Back
 
-    $("#section2Button").click(function() {
-        //player.playVideo();
-        //console.log (player.playerInfo.currentTime, player)
-        //console.log(timeX(player.playerInfo.currentTime))
-
-        //console.log ('abhi', player.getPlayerState())
-
-        if (player.getPlayerState() == YT.PlayerState.PLAYING) {
-
-            if (status) {} else {
-
-                let elmnt = document.getElementById("section2Repiter2");
-                elmnt.scrollIntoView({
-                    behavior: 'auto',
-                    block: 'center',
-                    inline: 'center'
-                });
+    /*if (statusBack) {} else {
 
                 if (lyrics2.length < 1) {
-                    console.log("start");
+                    console.log("start back");
 
-                    lyrics2.push(lyrics.shift());
-                    srtStart(lyrics2[0], player.playerInfo.currentTime)
-                } else if (lyrics.length < 1) {
+                    lyrics2.unshify(lyrics3.pop());
+                    //srtStart(lyrics2[0], player.playerInfo.currentTime)
+                } else if (lyrics3.length < 1) {
                     console.log("end");
 
-                    srtEnd(player.playerInfo.currentTime)
-                    lyrics3.push(lyrics2.shift());
-                    status = true;
-                    console.log(makeSrt)
+                    //srtEnd(player.playerInfo.currentTime)
+                    lyrics.unshift(lyrics2.pop());
+                    status = false;
+                    statusBack = true;
+                    //console.log(makeSrt)
                 } else {
                     console.log("default");
 
-                    srtEnd(player.playerInfo.currentTime)
-                    lyrics3.push(lyrics2.shift());
-                    lyrics2.push(lyrics.shift());
-                    srtStart(lyrics2[0], player.playerInfo.currentTime)
+                   // srtEnd(player.playerInfo.currentTime)
+                    lyrics.unshift(lyrics2.pop());
+                    lyrics2.unshift(lyrics3.pop());
+                    //srtStart(lyrics2[0], player.playerInfo.currentTime)
                 }
                 repiter(lyrics, "#section2Repiter3", "h5 text-secondary");
                 repiter(lyrics2, "#section2Repiter2", "h3");
                 repiter(lyrics3, "#section2Repiter1", "h5 text-secondary");
                 //console.log(lyrics, lyrics2, lyrics3)
-            }
-        } else {
-            player.playVideo();
-        }
-    });
+            }*/
+  });
 
-   /* $("#section2ButtonBack").click(function() {
+  /**************** Section  3 ************ */
+  $("#section3Button").click(function() {
 
-        //Lyrics Sync Back
-    });*/
-
-    /**************** Section  3 ************ */
-    $("#section3Button").click(function() {
-
-        // Download Srt file 
-    });
+    // Download Srt file
+  });
 });
 
 /**************** Function ************ */
 function repiter(lyrics, repiterName, h) {
-    let html = "";
-    for (var i = 0; i < lyrics.length; i++) {
-        html += `<p class="${h}">${lyrics[i]}</p>`
-    }
-    $(repiterName).html(html);
+  let html = "";
+  for (var i = 0; i < lyrics.length; i++) {
+    html += `<p class="${h}">${lyrics[i]}</p>`
+  }
+  $(repiterName).html(html);
 }
 
 function create_UUID() {
-    let dt = new Date().getTime();
-    let uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-        let r = (dt + Math.random() * 16) % 16 | 0;
-        dt = Math.floor(dt / 16);
-        return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
-    });
-    return uuid;
+  let dt = new Date().getTime();
+  let uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    let r = (dt + Math.random() * 16) % 16 | 0;
+    dt = Math.floor(dt / 16);
+    return (c == 'x' ? r: (r & 0x3 | 0x8)).toString(16);
+  });
+  return uuid;
 }
 
 function timeX(timeInSeconds) {
-    var pad = function(num, size) {
-            return ('000' + num).slice(size * -1);
-        },
-        time = parseFloat(timeInSeconds).toFixed(3),
-        hours = Math.floor(time / 60 / 60),
-        minutes = Math.floor(time / 60) % 60,
-        seconds = Math.floor(time - minutes * 60),
-        milliseconds = time.slice(-3);
+  var pad = function(num, size) {
+    return ('000' + num).slice(size * -1);
+  },
+  time = parseFloat(timeInSeconds).toFixed(3),
+  hours = Math.floor(time / 60 / 60),
+  minutes = Math.floor(time / 60) % 60,
+  seconds = Math.floor(time - minutes * 60),
+  milliseconds = time.slice(-3);
 
-    return pad(hours, 2) + ':' + pad(minutes, 2) + ':' + pad(seconds, 2) + ',' + pad(milliseconds, 3);
+  return pad(hours, 2) + ':' + pad(minutes, 2) + ':' + pad(seconds, 2) + ',' + pad(milliseconds, 3);
 }
 
 let makeSrt = [];
 let tempSrt
 
 function srtStart(lyrics, startTime) {
-    tempSrt = {
-        id: create_UUID(),
-        lyrics: lyrics,
-        startTime: startTime,
-        endTime: "",
-    }
+  tempSrt = {
+    id: create_UUID(),
+    lyrics: lyrics,
+    startTime: startTime,
+    endTime: "",
+  }
 }
 
 function srtEnd(endTime) {
-    tempSrt.endTime = endTime;
-    makeSrt.push(tempSrt);
+  tempSrt.endTime = endTime;
+  makeSrt.push(tempSrt);
 }
 
 
