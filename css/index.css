@@ -17,7 +17,7 @@
     
     #section1lyricsInput {
         margin-top: 10px;
-        height: 42vh;
+        height: 53vh;
     }
     
     #section1Button {
@@ -34,13 +34,20 @@
     }
     
     #section2container {
+        overflow: scroll;
         margin-top: 10px;
-        /*min-height: 42vh;*/
-      overflow: scroll;
+        min-height: 53vh;
+        height: 100px;
+    }
+    
+    #section2ButtonBack {
+      width: 15%;
+      margin-top: 10px;
     }
     
     #section2Button {
-        margin-top: 10px;
+      width: 84%;
+      margin-top: 10px;
     }
     /**************** Section  3 ************ */
     
