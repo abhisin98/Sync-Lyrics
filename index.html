@@ -9,7 +9,8 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <script src="js/index.js"></script>
+  <!--<script src="js/index.js"></script>-->
+  <script src="untitled.js"></script>
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="css/index.css">
@@ -51,9 +52,10 @@
           </div>
         </div>
 
-        <div class="col-sm">
-          <button type="button" id="section2SpeedIncrease" class="btn btn-primary float-left text-white">+300</button>
-          <button type="button" id="section2SpeedDecrease" class="btn btn-primary float-right text-white">-300</button>
+        <div id="section2Speed" class="col-sm d-flex justify-content-between">
+          <button type="button" id="section2SpeedDecrease" class="btn btn-primary float-left text-white">-5</button>
+          <div id="section2Speedtext" class="">1X</div>
+          <button type="button" id="section2SpeedIncrease" class="btn btn-primary float-right text-white">+5</button>
         </div>
 
         <div class="col-sm">
@@ -69,7 +71,7 @@
 
         <div class="col-sm">
           <button id="section2ButtonBack" type="button" class="btn btn-primary float-left text-white btn-lg"><</button>
-            <button id="section2Button" type="submit" class="btn btn-primary float-right btn-lg btn-block">Next</button>
+          <button id="section2Button" type="submit" class="btn btn-primary float-right btn-lg btn-block">Next</button>
           </div>
 
         </div>
@@ -85,7 +87,9 @@
             </div>
           </div>
 
-          <div id="section3PreviewLyrics" class="col-sm">
+          <div class="col-sm">
+            <div id="section3PreviewLyrics" class="text-center">
+            </div>
 
           </div>
 
