@@ -1,14 +1,18 @@
+//import {download, sub2vtt, sub2srt, sub2txt, sub2ass } from 'js/readSub.js';
+
 // 1. ytplayer code: https://developers.google.com/youtube/player_parameters#IFrame_Player_API
 var tag = document.createElement('script');
 tag.src = "https://www.youtube.com/player_api";
 var firstScriptTag = document.getElementsByTagName('script')[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-var player;
+//var player;
+window.player;
 
-function onYouTubePlayerAPIReady(eid, vid) {
+window.onYouTubePlayerAPIReady = function(eid, vid) {
   player = new YT.Player(eid, {
     videoId: youtube_parser(vid),
     events: {
+     // 'onReady': onPlayerReady,
       'onStateChange': onPlayerStateChange
     }
   });
@@ -20,10 +24,10 @@ function onYouTubePlayerAPIReady(eid, vid) {
   }
 
 }
-let mytimer
-function onPlayerStateChange(events) {
+//let mytimer
+//function onPlayerStateChange(events) {
 
-  section3PreviewLyrics();
+  //section3PreviewLyrics();
   /*if (player.getPlayerState() == YT.PlayerState.PLAYING && section3ItemRun) {
     /*mytimer = setInterval(function() {
     }, 0);*/
@@ -39,7 +43,7 @@ function onPlayerStateChange(events) {
   } else {
     clearTimeout(mytimer);
   }*/
-}
+//}
 
 /********************************************************************************************* */
 
@@ -66,6 +70,7 @@ $(document).ready(function() {
   let lyrics = [];
 
   $("#section1Button").click(function() {
+    console.log(player);
     $("#section1").hide();
     $("#section2").show();
     player.pauseVideo();
@@ -211,6 +216,7 @@ $(document).ready(function() {
   $("#section3Button").click(function() {
 
     // Download Srt file
+    downloadSubtitle("srt", settimetosrtformet(lyrics3));
   });
 });
 
@@ -218,7 +224,8 @@ $(document).ready(function() {
 let previewItem
 let section3ItemRun = false;
 let play_subtitles
-function section3PreviewLyrics() {
+
+window.onPlayerStateChange = function (state) {
   // Bind the play and pause methods
   //this.on('play', function() {
 
@@ -275,6 +282,60 @@ function create_UUID() {
   return uuid;
 }
 
+
+/********** pages **********/
+// call => downloadSubtitle("srt", settimetosrtformet(lyrics3));
+
+function downloadSubtitle(type, subtitle) {
+  let text = '';
+  const name = `${player.getVideoData().title /*Date.now()*/}.${type}`;
+  switch (type) {
+    case 'vtt':
+      text = sub2vtt(subtitle);
+      break;
+    case 'srt':
+      text = sub2srt(subtitle);
+      break;
+    case 'ass':
+      text = sub2ass(subtitle);
+      break;
+    case 'txt':
+      text = sub2txt(subtitle);
+      break;
+    case 'json':
+      text = JSON.stringify(subtitle);
+      break;
+    default:
+      break;
+  }
+  const url = URL.createObjectURL(new Blob([text]));
+  download(url, name);
+}
+
+function settimetosrtformet(Things) {
+  Things.unshift({
+    id: create_UUID(),
+    lyrics: "Avi Vox Lyrics",
+    startTime: "0.000000",
+    endTime: Things[0].endTime,
+  });
+
+  Things.push({
+    id: create_UUID(),
+    lyrics: "Avi Vox Lyrics",
+    startTime: Things[Things.length - 1].endTime,
+    endTime: /*Things[Things.length - 1].endTime*/player.getDuration(),
+  });
+
+
+  for (let i = 0; i < Things.length; i++) {
+    Things[i].startTime = timeX(Things[i].startTime)
+    Things[i].endTime = timeX(Things[i].endTime)
+
+  }
+  return Things;
+}
+
 function timeX(timeInSeconds) {
   var pad = function(num, size) {
     return ('000' + num).slice(size * -1);
@@ -285,8 +346,9 @@ function timeX(timeInSeconds) {
   seconds = Math.floor(time - minutes * 60),
   milliseconds = time.slice(-3);
 
-  return pad(hours, 2) + ':' + pad(minutes, 2) + ':' + pad(seconds, 2) + ',' + pad(milliseconds, 3);
+  return pad(hours, 2) + ':' + pad(minutes, 2) + ':' + pad(seconds, 2) + '.' + pad(milliseconds, 3);
 }
+
 
 /*let makeSrt = [];
 let tempSrt
@@ -305,6 +367,86 @@ function srtEnd(endTime) {
   makeSrt.push(tempSrt);
 }*/
 
+
+/********** Object To Convert File*********/
+
+
+function sub2vtt(sub) {
+  return (
+    'WEBVTT\n\n' +
+    sub
+    .map((item, index) => {
+      return index + 1 + '\n' + item.startTime + ' --> ' + item.endTime + '\n' + item.lyrics;
+    })
+    .join('\n\n')
+  );
+}
+
+function sub2srt(sub) {
+  console.log(sub, "srt")
+  return sub
+  .map((item, index) => {
+    return `${index + 1}\n${item.startTime.replace('.', ',')} --> ${item.endTime.replace('.', ',')}\n${item.lyrics}`;
+  })
+  .join('\n\n');
+}
+
+function sub2txt(sub) {
+  return sub.map((item) => item.lyrics).join('\n\n');
+}
+
+
+const toSubTime = (str) => {
+  let n = [];
+  let sx = '';
+  let x = str.split(/[:.]/).map((x) => Number(x));
+  x = str.split(/[:.]/).map((x) => Number(x));
+  x[3] = '0.' + ('00' + x[3]).slice(-3);
+  sx = (x[0] * 60 * 60 + x[1] * 60 + x[2] + Number(x[3])).toFixed(2);
+  sx = sx.toString().split('.');
+  n.unshift(sx[1]);
+  sx = Number(sx[0]);
+  n.unshift(('0' + (sx % 60).toString()).slice(-2));
+  n.unshift(('0' + (Math.floor(sx / 60) % 60).toString()).slice(-2));
+  n.unshift((Math.floor(sx / 3600) % 60).toString());
+  return n.slice(0, 3).join(':') + '.' + n[3];
+};
+
+function sub2ass(sub) {
+  return `
+  [Script Info]
+  ; // 此字幕由爱幕生成
+  Synch Point:1
+  ScriptType:v4.00+
+  Collisions:Normal
+  [V4+ Styles]
+  Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+  Style: Default, Microsoft YaHei, 20, &H00FFFFFF, &H000000FF, &H00000000, &H00000000, 0, 0, 0, 0, 100, 100, 0, 0, 1, 1, 0, 2, 10, 10, 10, 134
+  [Events]
+  Format: Layer, Start, End, Style, Actor, MarginL, MarginR, MarginV, Effect, Text
+  ${sub
+  .map((item) => {
+    const start = toSubTime(item.startTime);
+    const end = toSubTime(item.endTime);
+    const text = item.lyrics.replace(/\r?\n/g, '\\N');
+    return `Dialogue: 0,${start},${end},Default,NTP,0000,0000,0000,,${text}`;
+  })
+  .join('\n')}
+  `.trim();
+}
+
+
+// downloadSubtitle
+
+function download(url, name) {
+  const elink = document.createElement('a');
+  elink.style.display = 'none';
+  elink.href = url;
+  elink.download = name;
+  document.body.appendChild(elink);
+  elink.click();
+  document.body.removeChild(elink);
+}
 
 
 
