@@ -12,7 +12,7 @@ window.onYouTubePlayerAPIReady = function(eid, vid) {
   player = new YT.Player(eid, {
     videoId: youtube_parser(vid),
     events: {
-     // 'onReady': onPlayerReady,
+      // 'onReady': onPlayerReady,
       'onStateChange': onPlayerStateChange
     }
   });
@@ -27,16 +27,16 @@ window.onYouTubePlayerAPIReady = function(eid, vid) {
 //let mytimer
 //function onPlayerStateChange(events) {
 
-  //section3PreviewLyrics();
-  /*if (player.getPlayerState() == YT.PlayerState.PLAYING && section3ItemRun) {
+//section3PreviewLyrics();
+/*if (player.getPlayerState() == YT.PlayerState.PLAYING && section3ItemRun) {
     /*mytimer = setInterval(function() {
     }, 0);*/
-  /* } else {
+/* } else {
     //clearTimeout(mytimer);
   }*/
 
-  /*****/
-  /*if (player.getPlayerState() == YT.PlayerState.PLAYING) {
+/*****/
+/*if (player.getPlayerState() == YT.PlayerState.PLAYING) {
     mytimer = setInterval(function() {
       $("#section1lyricsInput").val(player.playerInfo.currentTime);
     }, 0);
@@ -60,27 +60,38 @@ $(document).ready(function() {
 
   /**************** Section  1 ************ */
   let url
-
+  let youtubeIsRady = false;
   $("#section1linkButton").click(function() {
-    url = $("#section1linkInput").val();
-    onYouTubePlayerAPIReady("section1Iframe", url);
+    if ($("#section1linkInput").val().indexOf("youtu") == -1) {
+      alert("Please enter your youtbe url");
+    } else {
+      url = $("#section1linkInput").val();
+      onYouTubePlayerAPIReady("section1Iframe", url);
+      youtubeIsRady = true;
+    }
   });
 
 
   let lyrics = [];
 
   $("#section1Button").click(function() {
-    console.log(player);
-    $("#section1").hide();
-    $("#section2").show();
-    player.pauseVideo();
+     if (youtubeIsRady && $("#section1lyricsInput").val().length > 10) {
+      //console.log(player);
+      $("#section1").hide();
+      $("#section2").show();
+      player.pauseVideo();
+      onYouTubePlayerAPIReady("section2Iframe", url);
 
-    onYouTubePlayerAPIReady("section2Iframe", url);
-
-    $("#section1lyricsInput").val().split("\n").filter(function(el) {
-      return el;
-    }).forEach(lyricsToArray);
-
+      $("#section1lyricsInput").val().split("\n").filter(function(el) {
+        return el;
+      }).forEach(lyricsToArray);
+      console.log(lyrics)
+      repiter(lyrics, "#section2Repiter3", "h5 text-secondary");
+    } else if ($("#section1lyricsInput").val().length < 10) {
+      alert("Please enter your lyrics")
+    }else {
+      alert("You forgot to load video")
+    }
     function lyricsToArray(item) {
       lyrics.push({
         id: create_UUID(),
@@ -89,9 +100,6 @@ $(document).ready(function() {
         endTime: "",
       });
     }
-    console.log(lyrics)
-    repiter(lyrics, "#section2Repiter3", "h5 text-secondary");
-
   });
 
   /**************** Section  2 ************ */
@@ -214,7 +222,6 @@ $(document).ready(function() {
   }
 
   $("#section3Button").click(function() {
-
     // Download Srt file
     downloadSubtitle("srt", settimetosrtformet(lyrics3));
   });
