@@ -324,7 +324,7 @@ function settimetosrtformet(Things) {
     id: create_UUID(),
     lyrics: "Avi Vox Lyrics",
     startTime: "0.000000",
-    endTime: Things[0].endTime,
+    endTime: Things[0].startTime,
   });
 
   Things.push({
